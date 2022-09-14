@@ -1,0 +1,318 @@
+{
+  "name": "aruba-clearpass",
+  "label": "Aruba ClearPass",
+  "description": "Aruba ClearPass is a policy management platform that enables businesses to effortlessly onboard new devices, grant varying access levels, and keep their networks secure. Aruba ClearPass connector performs actions like list guest and guest details, list endpoints and endpoint details etc.",
+  "publisher": "Community",
+  "cs_approved": false,
+  "cs_compatible": true,
+  "version": "1.0.0",
+  "category": "NAC",
+  "icon_large_name": "medium.png",
+  "icon_small_name": "small.png",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/1.0.0/aruba-clearpass/203/aruba-clearpass-v1-0-0",
+  "configuration": {
+    "fields": [
+      {
+        "title": "Server Address",
+        "name": "host",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "type": "text",
+        "description": "IP address or FQDN of the Aruba ClearPass server to which you will connect and perform the automated operations."
+      },
+      {
+        "title": "Client ID",
+        "name": "client_id",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "type": "text",
+        "description": "The client ID from your Aruba API client app definition."
+      },
+      {
+        "title": "Authorization Grant Type",
+        "name": "auth_grant_type",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "type": "select",
+        "options": [
+          "Client Secret",
+          "Username/Password"
+        ],
+        "description": "Select the Aruba ClearPass authentication type either Client Secret or Username-Password pair that you will use to access Aruba ClearPass.",
+        "onchange": {
+          "Client Secret": [
+            {
+              "title": "Client Secret",
+              "name": "client_secret",
+              "required": true,
+              "visible": true,
+              "editable": true,
+              "type": "password",
+              "description": "Client Secret field specify the client secret from your Aruba API client app definition. The client secret is required if the API client definition is not configured as a public client."
+            }
+          ],
+          "Username/Password": [
+            {
+              "title": "Username",
+              "name": "username",
+              "required": true,
+              "editable": true,
+              "visible": true,
+              "type": "text",
+              "description": "In the Username field, enter the username to access the Aruba ClearPass server to which you will connect and perform the automated operations."
+            },
+            {
+              "title": "Password",
+              "name": "password",
+              "required": true,
+              "visible": true,
+              "editable": true,
+              "type": "password",
+              "description": "In the Password field, enter the password to access the Aruba ClearPass server to which you will connect and perform the automated operations."
+            }
+          ]
+        }
+      },
+      {
+        "title": "Verify SSL",
+        "name": "verify_ssl",
+        "required": true,
+        "visible": true,
+        "editable": true,
+        "type": "checkbox",
+        "value": true,
+        "description": "Specifies whether the SSL certificate for the server is to be verified or not. \nBy default, this option is set as True"
+      }
+    ]
+  },
+  "operations": [
+    {
+      "operation": "list_guests",
+      "title": "Get List of Guests",
+      "description": "Retrieves the collection of all currently managed guest accounts from Aruba ClearPass.",
+      "category": "investigation",
+      "annotation": "list_guests",
+      "enabled": true,
+      "parameters": [],
+      "output_schema": {}
+    },
+    {
+      "operation": "get_guest_details",
+      "title": "Get Guest Details",
+      "description": "Retrieves details of a specific guest account from Aruba ClearPass based on the Guest ID you have specified.",
+      "category": "investigation",
+      "annotation": "get_guest_details",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Guest ID",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "guest_id",
+          "description": "Guest ID."
+        }
+      ],
+      "output_schema": {
+      }
+    },
+    {
+      "operation": "list_endpoints",
+      "title": "List Endpoint",
+      "description": "Retrieves the list of all connected endpoints on the Aruba ClearPass network.",
+      "category": "investigation",
+      "annotation": "list_endpoints",
+      "enabled": true,
+      "parameters": [],
+      "output_schema": {
+        "_links": {
+          "self": {
+            "href": ""
+          },
+          "first": {
+            "href": ""
+          }
+        },
+        "_embedded": {
+          "items": [
+            {
+              "id": "",
+              "mac_address": "",
+              "status": "",
+              "device_insight_tags": [],
+              "attributes": {},
+              "_links": {
+                "self": {
+                  "href": ""
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "operation": "get_endpoint_details",
+      "title": "Get Endpoint Detail",
+      "description": "Retrieves details of a specific endpoint from Aruba ClearPass based on the Endpoint ID you have specified.",
+      "category": "investigation",
+      "annotation": "get_endpoint_details",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Endpoint ID",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "endpoint_id",
+          "description": "The ID of the endpoint whose details you want to retrieve from Aruba ClearPass. "
+        }
+      ],
+      "output_schema": {
+        "id": "",
+        "mac_address": "",
+        "status": "",
+        "device_insight_tags": [],
+        "attributes": {},
+        "_links": {
+          "self": {
+            "href": ""
+          }
+        }
+      }
+    },
+    {
+      "operation": "update_endpoint_status",
+      "title": "Update Endpoint Status",
+      "description": "Updates the status of a specific connected endpoint in the Aruba ClearPass network based on the Endpoint ID and status you have specified.",
+      "category": "investigation",
+      "annotation": "update_endpoint_status",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Endpoint ID",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "endpoint_id",
+          "description": "The ID of the endpoint whose status you want to update in the Aruba ClearPass network."
+        },
+        {
+          "title": "Endpoint Status",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "select",
+          "options": [
+            "Known",
+            "Unknown",
+            "Disabled"
+          ],
+          "value": "Disabled",
+          "name": "endpoint_status",
+          "description": "Select the status that you want to update in the specific endpoint in the Aruba ClearPass network. You can choose from the following options: Known, Unknown, or Disabled."
+        },
+        {
+          "title": "Description",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "description",
+          "description": "Specify that description that you want to add while updating the status of the specific endpoint in the Aruba ClearPass network."
+        }
+      ],
+      "output_schema": {}
+    },
+    {
+      "operation": "list_sessions",
+      "title": "List Sessions",
+      "description": "Retrieves a list of all active sessions from the Aruba ClearPass network.",
+      "category": "investigation",
+      "annotation": "list_sessions",
+      "enabled": true,
+      "parameters": [],
+      "output_schema": {
+        "_links": {
+          "self": {
+            "href": ""
+          },
+          "first": {
+            "href": ""
+          }
+        },
+        "_embedded": {
+          "items": [
+            {
+              "id": "",
+              "ssid": "",
+              "state": "",
+              "_links": {
+                "self": {
+                  "href": ""
+                }
+              },
+              "ap_name": "",
+              "nas_name": "",
+              "username": "",
+              "cppm_uuid": "",
+              "nasportid": "",
+              "role_name": "",
+              "updated_at": "",
+              "mac_address": "",
+              "nasporttype": "",
+              "servicetype": "",
+              "acctstoptime": "",
+              "nasipaddress": "",
+              "sponsor_name": "",
+              "visitor_name": "",
+              "acctsessionid": "",
+              "acctstarttime": "",
+              "arubauserrole": "",
+              "arubauservlan": "",
+              "sponsor_email": "",
+              "total_traffic": "",
+              "visitor_phone": "",
+              "acctinputoctets": "",
+              "acctsessiontime": "",
+              "calledstationid": "",
+              "framedipaddress": "",
+              "visitor_carrier": "",
+              "visitor_company": "",
+              "acctoutputoctets": "",
+              "callingstationid": "",
+              "acctterminatecause": "",
+              "sponsor_profile_name": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "operation": "terminate_session",
+      "title": "Terminate Sessions",
+      "description": "Terminates an active session in the Aruba ClearPass network based on the Session ID you have specified.",
+      "category": "investigation",
+      "annotation": "terminate_session",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Session ID",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "type": "text",
+          "name": "session_id",
+          "description": "The ID of the session that you want to terminate from the Aruba ClearPass network."
+        }
+      ],
+      "output_schema": {}
+    }
+  ]
+}
