@@ -1,1 +1,1 @@
-# Repository to maintain Aruba Clearpass connector.
+Repository to maintain Aruba Clearpass connector.
