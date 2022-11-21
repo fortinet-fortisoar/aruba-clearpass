@@ -27,6 +27,8 @@ def check_response(r):
         raise ConnectorError(msg_string)
     if r.ok:
         return response_json
+    elif r.status_code == 404:   #Needed for API calls that are valid but have no content - e.g. query for specific device
+      	return None        
     else:
         if isinstance(response_json, dict):
             logger.exception('Rest API failed with Error: {error}'.format(error=response_json))
@@ -81,11 +83,15 @@ def get_guest_details(config, params, connector_info):
         raise ConnectorError(str(err))
 
 
-def list_sessions(config, params, connector_info):
+def list_sessions(config, params, connector_info):       
+    filterString = params.pop('filter', None)
+    if (not filterString):
+        endpoint = "/api/session?calculate_count=true"
+    else:
+        endpoint = "/api/session?calculate_count=true&filter={0}".format(json.dumps(filterString))  
     try:
-        endpoint = "/api/session"
         response = api_request("GET", endpoint, connector_info, config, params)
-        return response
+        return response    
     except Exception as err:
         raise ConnectorError(str(err))
 
@@ -151,6 +157,40 @@ def check_health(config, connector_info):
     except Exception as err:
         raise ConnectorError(str(err))
 
+def get_device_profile(config, params, connector_info):
+    try:
+        mac_or_ip = params.get('mac_or_ip')
+        endpoint = "/api/device-profiler/device-fingerprint/{0}".format(mac_or_ip)
+        response = api_request("GET", endpoint, connector_info, config, params)
+        return response
+    except Exception as err:
+        raise ConnectorError(str(err))        
+
+def disable_device(config, params, connector_info):
+    try:
+        mac_address = params.get('mac_address')
+        payload = {
+            "enabled": False
+        }
+        endpoint = "/api/device/mac/{0}".format(mac_address)
+        response = api_request("PATCH", endpoint, connector_info, config, params, data=payload)
+        return response
+    except Exception as err:
+        raise ConnectorError(str(err))     
+        
+        
+def session_coa_mac(config, params, connector_info):
+    try:
+        mac_address = params.get('mac_address')
+        coa_profile = params.get('coa_profile')
+        payload = {
+            "enforcement_profile":[coa_profile]
+        }
+        endpoint = "/api/session-action/coa/mac/{0}?async=false".format(mac_address)
+        response = api_request("POST", endpoint, connector_info, config, params, data=payload)
+        return response
+    except Exception as err:
+        raise ConnectorError(str(err))           
 
 operations = {
     "list_guests": list_guests,
@@ -159,6 +199,9 @@ operations = {
     "get_endpoint_details": get_endpoint_details,
     "update_endpoint_status": update_endpoint_status,
     "list_sessions": list_sessions,
-    "terminate_session": terminate_session
+    "terminate_session": terminate_session,
+    "disable_device": disable_device,
+    "session_coa_mac": session_coa_mac,
+    "get_device_profile": get_device_profile      
 
 }

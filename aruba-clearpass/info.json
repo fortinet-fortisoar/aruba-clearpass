@@ -123,7 +123,7 @@
     {
       "operation": "list_endpoints",
       "title": "List Endpoint",
-      "description": "Retrieves the list of all connected endpoints on the Aruba ClearPass network.",
+      "description": "Retrieves the list of all connected endpoints in Aruba ClearPass.",
       "category": "investigation",
       "annotation": "list_endpoints",
       "enabled": true,
@@ -189,7 +189,7 @@
     {
       "operation": "update_endpoint_status",
       "title": "Update Endpoint Status",
-      "description": "Updates the status of a specific connected endpoint in the Aruba ClearPass network based on the Endpoint ID and status you have specified.",
+      "description": "Updates the status of a specific connected endpoint in Aruba ClearPass based on the Endpoint ID and status you have specified.",
       "category": "investigation",
       "annotation": "update_endpoint_status",
       "enabled": true,
@@ -201,7 +201,7 @@
           "visible": true,
           "type": "text",
           "name": "endpoint_id",
-          "description": "The ID of the endpoint whose status you want to update in the Aruba ClearPass network."
+          "description": "The ID of the endpoint whose status you want to update in Aruba ClearPass."
         },
         {
           "title": "Endpoint Status",
@@ -216,7 +216,7 @@
           ],
           "value": "Disabled",
           "name": "endpoint_status",
-          "description": "Select the status that you want to update in the specific endpoint in the Aruba ClearPass network. You can choose from the following options: Known, Unknown, or Disabled."
+          "description": "Select the status that you want to update in the specific endpoint in Aruba ClearPass. You can choose from the following options: Known, Unknown, or Disabled."
         },
         {
           "title": "Description",
@@ -225,7 +225,7 @@
           "visible": true,
           "type": "text",
           "name": "description",
-          "description": "Specify that description that you want to add while updating the status of the specific endpoint in the Aruba ClearPass network."
+          "description": "Specify that description that you want to add while updating the status of the specific endpoint in Aruba ClearPass."
         }
       ],
       "output_schema": {}
@@ -233,11 +233,21 @@
     {
       "operation": "list_sessions",
       "title": "List Sessions",
-      "description": "Retrieves a list of all active sessions from the Aruba ClearPass network.",
+      "description": "Retrieves a list of all active sessions from Aruba ClearPass.",
       "category": "investigation",
       "annotation": "list_sessions",
       "enabled": true,
-      "parameters": [],
+      "parameters": [
+			{
+				"title": "filter",
+				"type": "text",
+				"name": "filter",
+				"required": false,
+				"visible": true,
+				"editable": true,
+				"value": ""
+			}
+		],
       "output_schema": {
         "_links": {
           "self": {
@@ -313,6 +323,69 @@
         }
       ],
       "output_schema": {}
-    }
+    },
+	{
+		"title": "Disable Device",
+		"operation": "disable_device",
+		"description": "Disables a device registered in Aruba ClearPass Guest",
+		"parameters": [
+			{
+				"title": "MAC address",
+				"type": "text",
+				"name": "mac_address",
+				"required": false,
+				"visible": true,
+				"editable": true,
+				"value": ""
+			}
+		],
+		"open": false,
+		"category": "remediation"
+	},
+	{
+		"title": "Send session COA by MAC",
+		"operation": "session_coa_mac",
+		"description": "Sends a RADIUS COA to the Aruba ClearPass session identified by the given MAC address",
+		"parameters": [
+			{
+				"title": "mac_address",
+				"type": "text",
+				"name": "mac_address",
+				"required": false,
+				"visible": true,
+				"editable": true,
+				"value": ""
+			},
+			{
+				"title": "coa_profile",
+				"type": "text",
+				"name": "coa_profile",
+				"required": false,
+				"visible": true,
+				"editable": true,
+				"value": ""
+			}
+		],
+		"open": false,
+		"category": "remediation"
+	},
+	{
+		"title": "Get device profile",
+		"operation": "get_device_profile",
+		"description": "Retrieve the attributes of a device profiled by Aruba ClearPass",
+		"parameters": [
+			{
+				"title": "mac_or_ip",
+				"type": "text",
+				"name": "mac_or_ip",
+				"required": false,
+				"visible": true,
+				"editable": true,
+				"value": ""
+			}
+		],
+		"open": false,
+		"category": "investigation"
+	}	
   ]
 }
