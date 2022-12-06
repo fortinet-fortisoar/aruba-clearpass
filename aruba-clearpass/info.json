@@ -9,7 +9,7 @@
   "category": "Network Security",
   "icon_large_name": "medium.png",
   "icon_small_name": "small.png",
-  "help_online": "",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/1.1.0/aruba-clearpass/458/aruba-clearpass-v1-1-0",
   "configuration": {
     "fields": [
       {
@@ -325,7 +325,7 @@
     {
       "title": "Disable Device",
       "operation": "disable_device",
-      "description": "Disables a device registered in Aruba ClearPass Guest.",
+      "description": "Disables a device registered in Aruba ClearPass Guest based on the MAC address you have specified.",
       "annotation": "disable_device",
       "enabled": true,
       "parameters": [
@@ -336,7 +336,7 @@
           "required": false,
           "visible": true,
           "editable": true,
-          "description": "The MAC address of the device that you want to disable from the Aruba ClearPass."
+          "description": "(Optional) Specify the MAC address of the device to disable from the Aruba ClearPass."
         }
       ],
       "category": "remediation",
@@ -345,7 +345,7 @@
     {
       "title": "Send Session COA by MAC",
       "operation": "session_coa_mac",
-      "description": "Sends a RADIUS COA to the Aruba ClearPass session identified by the given MAC address.",
+      "description": "Sends a RADIUS Change of Authorization (COA) to the Aruba ClearPass session based on the MAC address and COA Profile you have specified.",
       "annotation": "session_coa_mac",
       "enabled": true,
       "parameters": [
@@ -356,7 +356,7 @@
           "required": false,
           "visible": true,
           "editable": true,
-          "description": "Specify MAC address to identify session of the Aruba ClearPass."
+          "description": "(Optional) Specify the MAC address to identify the Aruba ClearPass session."
         },
         {
           "title": "COA Profile",
@@ -365,7 +365,7 @@
           "required": false,
           "visible": true,
           "editable": true,
-          "description": "Specify COA Profile to sends a RADIUS COA to the Aruba ClearPass."
+          "description": "(Optional) Specify the COA Profile to send a RADIUS COA to the Aruba ClearPass network."
         }
       ],
       "category": "remediation",
@@ -374,7 +374,7 @@
     {
       "title": "Get Device Profile",
       "operation": "get_device_profile",
-      "description": "Retrieve the attributes of a device profiled by Aruba ClearPass.",
+      "description": "Retrieves the attributes of a device profiled by Aruba ClearPass based on the MAC address or IP address you have specified.",
       "annotation": "get_device_profile",
       "enabled": true,
       "parameters": [
@@ -385,7 +385,7 @@
           "required": false,
           "visible": true,
           "editable": true,
-          "description": "Specify MAC Address /IP Address to get attributes of a device by the Aruba ClearPass."
+          "description": "Specify the MAC or the IP Address to get attributes of a device from the Aruba ClearPass network."
         }
       ],
       "category": "investigation",
